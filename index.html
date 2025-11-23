@@ -78,6 +78,7 @@
   document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loader').style.display = 'none';
   document.getElementById('passwordPrompt').style.display = 'flex';
+  document.getElementById('passwordInput').focus();
   document.getElementById('overlayBlocker').style.display = 'block';
   document.body.classList.add('blocked');
 });
