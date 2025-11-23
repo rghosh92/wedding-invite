@@ -12,29 +12,47 @@
   height: 26.31%;
 }
 
-    #loginForm {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.9);
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 1000;
-    }
+#loginForm {
+position: fixed;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+background: rgba(0,0,0,0.9);
+color: white;
+padding: 20px;
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+align-items: center;
+z-index: 1000;
+}
 
-    #loginForm input, #loginForm button {
-      font-size: 30px;
-      padding: 8px 12px;
-      margin: 6px 0;
-    }
-    #loginForm label {
-      font-size: 24px;   /* make the label text bigger */
-      margin-bottom: 10px;
-    }
+#loginForm input[type="password"] {
+  font-size: 30px;       /* large text */
+  padding: 12px 16px;    /* comfortable spacing */
+  margin: 6px 0;
+  width: 60%;            /* takes up 60% of the page width */
+  max-width: 400px;      /* but never larger than 400px */
+  min-width: 200px;      /* and never smaller than 200px */
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+#loginForm button {
+  font-size: 30px;
+  padding: 12px 20px;
+  margin: 6px 0;
+  width: 40%;            /* button scales too */
+  max-width: 200px;
+}
+
+
+#loginForm label {
+  font-size: 4vw;        /* scales with viewport width */
+  margin-bottom: 10px;
+  display: block;
+  text-align: center;
+}
+
 
     #content { display:none; }
     .page svg { background:#fff; }
@@ -571,7 +589,9 @@
       document.getElementById("errorMsg").style.display = "block";
     }
   }
-
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('pswd').focus();
+  });
 </script>
 
 </body>
