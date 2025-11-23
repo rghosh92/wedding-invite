@@ -2,56 +2,104 @@
 <html>
 <head>
 <meta name="robots" content="noindex, nofollow">
-
-
 <title>Rajdip Ecard.cdr</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style>
-    #loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5em;
-      font-family: sans-serif;
-      z-index: 9999;
-    }
-body {padding:0; margin:0; text-align:center; background-color:#777; transform: scale(3.8); transform-origin: top left;
-  width: 26.31%;
-      height: 26.31%;}
-.page {margin:5px 0}
-.page svg {background-color:#fff}
-</style>
+  /* Loader */
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: white;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 1.5em; font-family: sans-serif;
+  z-index: 9999;
+}
 
+/* Password bar at the top */
+#passwordPrompt {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 10%;   /* just a strip */
+  background: rgba(0,0,0,0.95);
+  display: none;
+  justify-content: center; align-items: center;
+  flex-direction: row;
+  color: white; font-family: sans-serif;
+  z-index: 10001;
+}
+
+/* Full‑screen blocker overlay */
+#overlayBlocker {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  z-index: 10000;
+}
+
+  body {
+    padding:0; margin:0; text-align:center;
+    background-color:#777;
+    transform: scale(3.8); transform-origin: top left;
+    width: 26.31%; height: 26.31%;
+  }
+  .page {margin:5px 0}
+  .page svg {background-color:#fff}
+</style>
 </head>
 <body>
-  <div id="loader">
-     <h2>Loading…</h2>
-   </div>
+  <div id="loader"><h2>Loading…</h2></div>
 
+  <!-- Password bar -->
+  <div id="passwordPrompt">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Submit</button>
+    <p id="errorMsg" style="color:red; display:none;">Wrong password</p>
+  </div>
+
+  <!-- Full screen blocker -->
+  <div id="overlayBlocker"></div>
 
   <audio id="bgm" autoplay playsinline muted>
     <source src="boom.mp3" type="audio/mpeg">
   </audio>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-    });
-    function enableSound() {
-      const bgm = document.getElementById('bgm');
-      if (bgm.muted) {
-        bgm.muted = false;
-        bgm.volume = 0.8;
-        bgm.play();
-      }
-    }
+  <div id="content" style="display:none;">
+    <!-- Your invitation content goes here -->
+    <div class="page">
+      <!-- SVG and rest of your file -->
+    </div>
+  </div>
+
+<script>
+  // Show password prompt after loader finishes
+  document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('passwordPrompt').style.display = 'flex';
+  document.getElementById('overlayBlocker').style.display = 'block';
+  document.body.classList.add('blocked');
+});
+
+function checkPassword() {
+const input = document.getElementById('passwordInput').value;
+const correctPassword = "SanyogShalini";
+
+if (input === correctPassword) {
+  document.getElementById('passwordPrompt').style.display = 'none';
+  document.getElementById('overlayBlocker').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  document.body.classList.remove('blocked');
+
+  const bgm = document.getElementById('bgm');
+  bgm.muted = false;
+  bgm.volume = 0.8;
+  bgm.play();
+} else {
+  document.getElementById('errorMsg').style.display = 'block';
+}
+}
     document.addEventListener('touchstart', enableSound, { once: true });
     document.addEventListener('click', enableSound, { once: true });
   </script>
