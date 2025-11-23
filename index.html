@@ -29,6 +29,12 @@
   z-index: 10001;
 }
 
+#passwordPrompt input,
+#passwordPrompt button {
+  font-size: 16px;   /* stops mobile zoom */
+  padding: 6px 10px;
+}
+
 /* Full‑screen blocker overlay */
 #overlayBlocker {
   position: fixed;
@@ -95,7 +101,7 @@ if (input === correctPassword) {
 
   const bgm = document.getElementById('bgm');
   bgm.muted = false;
-  bgm.volume = 0.5;
+  bgm.volume = 0.2;
   bgm.play();
 } else {
   document.getElementById('errorMsg').style.display = 'block';
