@@ -608,7 +608,7 @@ z-index: 1000;
       const svg = wrapper.querySelector("svg");
 
       // Here we actually define SCALE_VALUE by calling getScale
-      const scaleX = getScale(svg, 1.0);        // 80% of viewport width
+      const scaleX = getScale(svg, 0.9);        // 80% of viewport width
         const scaleY = getVerticalScale(svg, 1/0.8);
           const SCALE_VALUE = Math.min(scaleX, scaleY);
       wrapper.classList.add("zoomed");
