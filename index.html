@@ -5,12 +5,10 @@
   <title>Invitation with Login</title>
   <style>
     body { margin:0; padding:0; text-align:center; background:#777; font-family:sans-serif; }
+
     .invite-wrapper.zoomed {
-  transform: scale(3.8);
-  transform-origin: top left;
-  width: 26.31%;
-  height: 26.31%;
-}
+            transform-origin: top left;
+    }
 
 #loginForm {
 position: fixed;
@@ -57,6 +55,11 @@ z-index: 1000;
     #content { display:none; }
     .page svg { background:#fff; }
   </style>
+
+
+
+
+
 </head>
 <body>
 
@@ -569,18 +572,50 @@ z-index: 1000;
   </div>
 </div>
 
+
+
 <script>
+  // Compute scale so the SVG fills a given fraction of the viewport width
+  function getScale(svgEl, fraction = 0.8) {
+    const svgWidth =
+      (svgEl.viewBox && svgEl.viewBox.baseVal && svgEl.viewBox.baseVal.width) ||
+      parseFloat(svgEl.getAttribute('width')) ||
+      svgEl.getBoundingClientRect().width || 1;
+
+    const targetWidth = window.innerWidth * fraction;
+    return targetWidth / svgWidth;
+  }
+
+  function getVerticalScale(svgEl, fraction = 0.8) {
+    const vbHeight =
+      (svgEl.viewBox && svgEl.viewBox.baseVal && svgEl.viewBox.baseVal.height) ||
+      parseFloat(svgEl.getAttribute('height')) ||
+      svgEl.getBoundingClientRect().height || 1;
+
+    const targetHeight = window.innerHeight * fraction;
+    return targetHeight / vbHeight;
+  }
+
+
   function checkPswd() {
-    var confirmPassword = "SanyogShalini";
+    var confirmPassword = "sanyogshalini";
     var password = document.getElementById("pswd").value;
     if (password === confirmPassword) {
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("content").style.display = "block";
 
-      // Zoom the invitation
-      document.querySelector(".invite-wrapper").classList.add("zoomed");
+      const wrapper = document.querySelector(".invite-wrapper");
+      const svg = wrapper.querySelector("svg");
 
-      // Enable sound
+      // Here we actually define SCALE_VALUE by calling getScale
+      <!-- const SCALE_VALUE = getScale(svg, 0.8); // 80% of viewport width -->
+    const SCALE_VALUE = getVerticalScale(svg, 1/0.8); // 80% of viewport height
+      wrapper.classList.add("zoomed");
+      wrapper.style.transform = `scale(${SCALE_VALUE})`;
+      wrapper.style.transformOrigin = "top left";
+      wrapper.style.width = (100 / SCALE_VALUE) + "%";
+      wrapper.style.height = (100 / SCALE_VALUE) + "%";
+
       const bgm = document.getElementById("bgm");
       bgm.muted = false;
       bgm.volume = 0.2;
@@ -589,10 +624,13 @@ z-index: 1000;
       document.getElementById("errorMsg").style.display = "block";
     }
   }
+
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('pswd').focus();
   });
 </script>
+
+
 
 </body>
 </html>
